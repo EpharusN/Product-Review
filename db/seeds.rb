@@ -1,23 +1,27 @@
-# db/seeds.rb
+puts "🌱 Seeding data..."
 
-Product.all.each do |product|
-    User.all.each do |user|
-      Review.create(
-        star_rating: rand(1..5),
-        comment: "I would buy this product a million times!",
-        product: product,
-        user: user
-      )
-    end
+# Make 10 users
+10.times do
+  User.create(name: Faker::Name.name)
+end
+
+# Make 50 products
+50.times do
+  product = Product.create(
+    name: Faker::Name.name,
+    price: rand(0..60) # random number between 0 and 60
+  )
+
+  rand(1..5).times do
+    user = User.order('RANDOM()').first
+
+    Review.create(
+      star_rating: rand(1..5),
+      comment: "I would buy this product a million times!",
+      product: product,
+      user: user
+    )
   end
+end
 
-
-  #products
-  Product.create(name: "sugar", price: 450)
-  Product.create(name: "cheese", price: 100)
-  Product.create(name: "oil", price: 600)
-
-#users
-User.create(name: "ate")
-User.create(name: "Jim")
-User.create(name: "John")
+puts "🌱 Done seeding!"
