@@ -12,11 +12,18 @@
 
 ActiveRecord::Schema.define(version: 2023_06_04_035120) do
 
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.integer "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "star_rating"
     t.string "comment"
-    t.integer "product_id"
-    t.integer "user_id"
+    t.integer "product_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_reviews_on_product_id"
@@ -29,4 +36,6 @@ ActiveRecord::Schema.define(version: 2023_06_04_035120) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "reviews", "products"
+  add_foreign_key "reviews", "users"
 end
